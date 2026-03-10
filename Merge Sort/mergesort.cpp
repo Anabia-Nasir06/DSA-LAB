@@ -1,54 +1,54 @@
 #include <iostream>
 using namespace std;
 
-void merge(int arr[], int left, int mid, int right){
-    int n1 = mid - left +1;
-    int n2 = right - mid;
+void merge(int arr[], int left, int mid, int right)
+{
+    int temp[100]; // temporary array
 
-    int * L = new int[n1];
-    int * R = new int[n2];
+    int i = left;    // left part start
+    int j = mid + 1; // right part start
+    int k = left;    // temp index
 
-    for (int i = 0; i < n1;i++) 
-        L[i]=arr[left+i];
-    for (int i = 0; i < n2;i++) 
-        R[i]=arr[mid+1+i];
-        
-    int i =0, j=0, k= left;
-
-    while(i<n1 && j<n2){
-        if(L[i]<=R[j])
-            arr[k++] = L[i++];
+    // compare both parts
+    while (i <= mid && j <= right)
+    {
+        if (arr[i] <= arr[j])
+            temp[k++] = arr[i++];
         else
-            arr[k++]= R[j++];
+            temp[k++] = arr[j++];
     }
 
-    while(i<n1) 
-        arr[k++] = L[i++];
-    while(j<n2)
-        arr[k++]= R[j++];
+    // remaining left elements
+    while (i <= mid)
+        temp[k++] = arr[i++];
 
-    delete[] L;
-    delete[] R;
+    // remaining right elements
+    while (j <= right)
+        temp[k++] = arr[j++];
 
+    // copy back to original array
+    for (int x = left; x <= right; x++)
+        arr[x] = temp[x];
 }
 
-void mergesort(int arr[], int left, int right){
-    if(left>=right)
+void mergeSort(int arr[], int left, int right)
+{
+    if (left >= right)
         return;
-    int mid =  left + (right-left/2); 
-    mergesort(arr,left,mid);
-    mergesort(arr,mid+1,right);
-    merge(arr,left,mid,right);
-
+    int mid = (left + right) / 2;
+    mergeSort(arr, left, mid);      // left half
+    mergeSort(arr, mid + 1, right); // right half
+    merge(arr, left, mid, right);   // merge them
 }
 
-int main(){
-    int arr[] = {38, 27,43,3,9,83,10};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    mergesort(arr,0,n-1);
+int main()
+{
+    int arr[] = {38, 27, 43, 3, 9, 82, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
-    for(int i=0; i<n; i++){
-        cout<<arr[i]<<" ";
-    }
-    return 0;
+    mergeSort(arr, 0, n - 1);
+
+    cout << "Sorted array:\n";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
 }

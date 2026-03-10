@@ -16,16 +16,16 @@ int hashFunction(int key) {
 }
 
 // insert using quadratic probing
-void insert(int key) {
-    int index = hashFunction(key);
+void insert(int value) {
+    int index = hashFunction(value);
     int i = 0;
 
     while (i < SIZE) {
         int pos = (index + i*i) % SIZE;
 
         if (table[pos] == -1) {
-            table[pos] = key;
-            cout << key << " inserted at index " << pos << endl;
+            table[pos] = value;
+            cout << value << " inserted at index " << pos << endl;
             return;
         }
 

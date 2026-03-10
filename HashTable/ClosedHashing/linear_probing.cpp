@@ -11,31 +11,29 @@ void init() {
 }
 
 // hash function
-int hashFunction(int key) {
-    return key % SIZE;
+int hashFunction(int value) {
+    return value % SIZE;
 }
 
 // insert value
-void insert(int key) {
-    int index = hashFunction(key);
-
+void insert(int value) {
+    int index = hashFunction(value);
     while (table[index] != -1) {
         index = (index + 1) % SIZE;   // move to next position
     }
-
-    table[index] = key;
-    cout << key << " inserted at index " << index << endl;
+    table[index] = value;
+    cout << value << " inserted at index " << index << endl;
 }
 
 // search value
-void search(int key) {
-    int index = hashFunction(key);
+void search(int value) {
+    int index = hashFunction(value);
     int count = 0;
 
     while (table[index] != -1 && count < SIZE) {
 
-        if (table[index] == key) {
-            cout << key << " found at index " << index << endl;
+        if (table[index] == value) {
+            cout << value << " found at index " << index << endl;
             return;
         }
 
@@ -43,7 +41,7 @@ void search(int key) {
         count++;
     }
 
-    cout << key << " not found" << endl;
+    cout << value << " not found" << endl;
 }
 
 // display table
